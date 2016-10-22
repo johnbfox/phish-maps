@@ -1,6 +1,6 @@
 # Phish Maps
 This project is an attempt to visualize the jam rock band Phish's shows in a map
-of the united states.
+of the united states.  The application is hosted [here] (https://www.johnbfox.com/phish-maps).
 
 ## Data
 The data used for this project was scraped from the [phish.net] (https://www.phish.net) api
