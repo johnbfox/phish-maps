@@ -1,0 +1,98 @@
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+#geoChartOverlay{
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#heroSection{
+  z-index: 3;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h4.hero-description{
+  width: 45%;
+  line-height: 1.25em;
+  font-weight: 600;
+}
+
+#geoChart{
+  display: block;
+  width: 100%;
+  height: 90%;
+  z-index: -1;
+  margin-top: 75px;
+}
+
+#geoSection{
+  display: flex
+  align-items:center;
+  justify-content: center;
+}
+
+#playSection{
+  z-index: 5;
+  clear:both;
+}
+
+.margin-right{
+  margin-right: 12px;
+}
+
+.margin-right--half{
+  margin-right: 6px;
+}
+
+.margin-left{
+  margin-left:12px;
+}
+
+.margin-top{
+  margin-top: 12px !important;
+}
+.margin-top--half{
+  margin-top:6px !important;
+}
+
+.margin-top--double{
+  margin-top:24px;
+}
+
+.margin-bottom{
+  margin-bottom:12px;
+}
+
+.filter-options__option-value, .filter-options__option-label{
+  display: block;
+  float: left;
+}
+
+.filter-options__option-value{
+  margin-right: 24px;
+}
+
+.filter-options__option-label{
+  margin-right:12px;
+}
+
+.form-separator{
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.container{
+  max-width: 1200px;
+}
