@@ -1,6 +1,5 @@
 var regionsMode = '0',
-    regionsYear = '1983',
-    chartDiv = '<div id="geoChart"></div>';
+    regionsYear = '1983';
 
 $(document).ready(function(){
   init();
@@ -17,11 +16,13 @@ function init(){
     $('#startButtons').hide();
     $('#playSection').show();
     $('#geoChart').css('z-index', 2);
-    $('#playContainer').html(chartDiv);
     $('#geoChart').show();
     drawRegionsMap();
   });
 
+  $('#githubButton').click(function(){
+     window.location.href='https://github.com/johnbfox/phish-maps';
+  })
   $('input[name=regionsRadios]').change(function(){
     resetMap();
   });
@@ -64,9 +65,9 @@ function intializeGeoChart(){
 }
 
 function drawRegionsMap(mode) {
-  var url = 'http://phish-api.herokuapp.com/showStateCount';
+  var url = 'MASKED URL';
   if( $('#cumulative-checkbox').prop('checked') && regionsMode === "1"){
-    url = 'http://phish-api.herokuapp.com/showStateCountCum';
+    url = 'MASKED URL';
   }
 
   if(regionsMode === '1'){
@@ -111,7 +112,6 @@ function drawRegionsMap(mode) {
     if(avg > min && avg < max){
       colorVals = [min, avg, max];
     }
-
 
     var data = google.visualization.arrayToDataTable(parsedResults);
 
