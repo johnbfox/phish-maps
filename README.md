@@ -3,10 +3,10 @@ This project is an attempt to visualize the jam rock band Phish's shows in a map
 of the united states.
 
 ## Data
-The data used for this project was scraped from the [I'm an inline-style link with title]
-(https://www.phish.net) via python scripts. Once the data collected a NodeJs API with
-express was built to perform the data accumulation logic. As per their api terms of use,
-that process will remain undisclosed.
+The data used for this project was scraped from the [phish.net] (https://www.phish.net)
+and the Mockingbird Foundation via python scripts. Once the data collected a
+NodeJs API withexpress was built to perform the data accumulation logic. As per
+their api terms of use, thatprocess will remain undisclosed.
 
 ## Maps
 
