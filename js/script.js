@@ -65,9 +65,9 @@ function intializeGeoChart(){
 }
 
 function drawRegionsMap(mode) {
-  var url = 'MASKED URL';
+  var url = 'http://phish-api.herokuapp.com/showStateCount';
   if( $('#cumulative-checkbox').prop('checked') && regionsMode === "1"){
-    url = 'MASKED URL';
+    url = 'http://phish-api.herokuapp.com/showStateCountCum';
   }
 
   if(regionsMode === '1'){
@@ -80,9 +80,11 @@ function drawRegionsMap(mode) {
     let results = response.data.results,
                   parsedResults = [],
                   headerItem = [];
+
     headerItem[0] = 'State';
     headerItem[1] = 'Shows';
 
+    //gathering data for max, min, and average
     let max = -1;
     let min = 500000000;
     let total = 0;
@@ -107,7 +109,9 @@ function drawRegionsMap(mode) {
         }
       }
     }
+
     const avg = total/parsedResults.length;
+
     let colorVals = null;
     if(avg > min && avg < max){
       colorVals = [min, avg, max];
