@@ -48,6 +48,19 @@ h4.hero-description{
   clear:both;
 }
 
+#loadingLayer{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -4;
+}
+
 .margin-right{
   margin-right: 12px;
 }

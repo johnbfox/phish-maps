@@ -129,6 +129,9 @@ function drawRegionsMap(mode) {
     };
 
     var chart = new google.visualization.GeoChart(document.getElementById('geoChart'));
+    google.visualization.events.addListener(chart, 'ready', function(){
+      $('#loadingLayer').hide();
+    });
 
     chart.draw(data, options);
   });
