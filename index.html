@@ -1,9 +1,9 @@
 <html>
 <head>
   <title>Phish Maps</title>
-  <meta name="keywords" content="phish, data, maps, api, visualize, jam, band, america"/>
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="css/style.css" rel="stylesheet" type="text/css"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -13,7 +13,7 @@
   <div id="heroSection">
     <h1 class="text-center margin-bottom">Phish, a Career in Maps</h1>
     <h4 class="hero-description text-center">
-      Over a 30 plus year career, Phish has played over a thousand shows across the United States. This map reflects the geographic density of Phish shows over the course of the band's historic career.
+      Over a 30 plus year career, Phish has played thousands of shows across the United States. This map reflects the geographic density of Phish shows over the course of the band's historic career.
     </h4>
     <div id="startButtons" class="form-inline margin-top">
       <button id="playButton" class="btn btn-primary btn-lg margin-right">Play</button>
@@ -22,61 +22,13 @@
   </div>
   <div id="playSection" hidden>
     <div class="container">
-      <div id="title" class="margin-top pull-left">
-        <h2 id="chartTitle">Career shows</h2>
-      </div>
       <div class="margin-top--double">
-        <div id="playForm" class="form-inline pull-right">
-          <div class="radio margin-right">
-            <label>
-              <input type="radio" name="regionsRadios" id="regionsRadio1" value="0" checked>
-              Career
-            </label>
-          </div>
-          <div class="form-separator">
-            |
-          </div>
-          <div class="radio margin-right--half">
-            <label>
-              <input type="radio" name="regionsRadios" id="regionsRadio2" value="1">
-              By Year
-            </label>
-          </div>
-          <select id="regions-year-select" class="form-control margin-right--half" disabled>
-            <option>1983</option>
-            <option>1984</option>
-            <option>1985</option>
-            <option>1986</option>
-            <option>1987</option>
-            <option>1988</option>
-            <option>1989</option>
-            <option>1990</option>
-            <option>1991</option>
-            <option>1992</option>
-            <option>1993</option>
-            <option>1994</option>
-            <option>1995</option>
-            <option>1996</option>
-            <option>1997</option>
-            <option>1998</option>
-            <option>1999</option>
-            <option>2000</option>
-            <option>2001</option>
-            <option>2002</option>
-            <option>2003</option>
-            <option>2004</option>
-            <option>2009</option>
-            <option>2010</option>
-            <option>2011</option>
-            <option>2012</option>
-            <option>2013</option>
-            <option>2014</option>
-            <option>2015</option>
-            <option>2016</option>
-          </select>
+        <div id="playForm">
+          <input id="slider" type="range" min="1983" max="2016" value="2016"/>
+          <span id="year">2016</span>
           <div class="checkbox">
-            <label>
-              <input id="cumulative-checkbox" disabled type="checkbox"> Cumulative
+            <label id="cumulativeCheckboxContainer">
+              <input id="cumulativeCheckbox" type="checkbox" checked> Total
             </label>
           </div>
         </div>
@@ -85,9 +37,6 @@
   </div>
   <div class="container"><div id="geoChart"></div></div>
   <div id="geoChartOverlay"></div>
-  <div id="loadingLayer">
-    <img src="img/spinner.gif"/>
-  </div>
 
   <script src="js/jquery-3.1.0.min.js"></script>
   <script src="js/script.js"></script>

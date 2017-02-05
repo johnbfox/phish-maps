@@ -1,5 +1,6 @@
 var regionsMode = '0',
-    regionsYear = '1983';
+    regionsYear = '2016',
+    chartDiv = '<div id="geoChart"></div>';
 
 $(document).ready(function(){
   init();
@@ -16,123 +17,117 @@ function init(){
     $('#startButtons').hide();
     $('#playSection').show();
     $('#geoChart').css('z-index', 2);
+    $('#playContainer').html(chartDiv);
     $('#geoChart').show();
     drawRegionsMap();
   });
 
-  $('#githubButton').click(function(){
-     window.location.href='https://github.com/johnbfox/phish-maps';
-  })
-  $('input[name=regionsRadios]').change(function(){
+  $('#slider').on('change', function(){
+    regionsYear = $('#slider').val();
     resetMap();
   });
 
-  $('#cumulative-checkbox').change(function(){
+  $('#slider').on('input', function(){
+    $('#year').html($('#slider').val());
+  });
+
+  $('#cumulativeCheckbox').change(function(){
     resetMap();
   });
 
-  $("#regions-year-select").change(function(){
-    regionsYear = $("#regions-year-select").val();
-    resetMap();
+
+  $("#githubButton").click(function(){
+    window.location.href = "https://github.com/johnbfox/phish-maps";
+  });
+
+  $(window).resize(function(){
+    drawRegionsMap();
   });
 }
 
 function resetMap(){
-  var value = $( 'input[name=regionsRadios]:checked' ).val();
-  regionsMode = value;
-  if(value === "1"){
-    $("#regions-year-select").prop('disabled', false);
-    $("#cumulative-checkbox").prop('disabled', false);
-    if($("#cumulative-checkbox").prop('checked')){
-      $("#chartTitle").html("Played between 1983 and " + regionsYear);
-    }
-    else{
-      $("#chartTitle").html('Played in ' + regionsYear);
-    }
-  }else{
-    $("#regions-year-select").prop('disabled', true);
-    $("#cumulative-checkbox").prop('disabled', true);
-    $("#chartTitle").html("Career shows");
-  }
-  drawRegionsMap();
+  mapForYear(regionsYear)();
 }
 
 
 
 function intializeGeoChart(){
   google.charts.load('current', {'packages':['geochart']});
-  google.charts.setOnLoadCallback(drawRegionsMap);
+  google.charts.setOnLoadCallback(mapForYear(regionsYear));
 }
 
-function drawRegionsMap(mode) {
-  var url = 'http://phish-api.herokuapp.com/showStateCount';
-  if( $('#cumulative-checkbox').prop('checked') && regionsMode === "1"){
-    url = 'http://phish-api.herokuapp.com/showStateCountCum';
-  }
+function mapForYear(year){
+  var drawRegionsMap = function() {
+    var prod = false,
+        host = 'localhost:5000';
+    if(prod){
+      host='71.232.15.121';
+    }
 
-  if(regionsMode === '1'){
-    url = url + '/' + regionsYear;
-  }
-  $.ajax({
-    url: url,
-    context: document.body
-  }).done(function(response) {
-    let results = response.data.results,
-                  parsedResults = [],
-                  headerItem = [];
+    var url = `http://${host}/showStateCount`;
+    if( $('#cumulativeCheckbox').prop('checked')){
+      url = `http://${host}/showStateCountCum`;
+    }
 
-    headerItem[0] = 'State';
-    headerItem[1] = 'Shows';
+    url = url + '/' + year;
 
-    //gathering data for max, min, and average
-    let max = -1;
-    let min = 500000000;
-    let total = 0;
+    $.ajax({
+      url: url,
+      context: document.body
+    }).done(function(response) {
+      let results = response.data.results,
+                    parsedResults = [],
+                    headerItem = [];
+      headerItem[0] = 'State';
+      headerItem[1] = 'Shows';
 
-    parsedResults.push(headerItem);
+      let max = -1;
+      let min = 500000000;
+      let total = 0;
 
-    for(var i = 0; i < results.length; i++){
-      if(results[i].state.length > 0){
-        let arrObj = [];
-        arrObj[0] = "US-" + results[i].state;
-        arrObj[1] = results[i].count;
-        if(arrObj[1] < min){
-          min = arrObj[1];
-        }
+      parsedResults.push(headerItem);
 
-        if(arrObj[1] > max){
-          max = arrObj[1];
-        }
-        total += arrObj[1];
+      for(var i = 0; i < results.length; i++){
         if(results[i].state.length > 0){
-          parsedResults.push(arrObj);
+          let arrObj = [];
+          arrObj[0] = "US-" + results[i].state;
+          arrObj[1] = results[i].count;
+          if(arrObj[1] < min){
+            min = arrObj[1];
+          }
+
+          if(arrObj[1] > max){
+            max = arrObj[1];
+          }
+          total += arrObj[1];
+          if(results[i].state.length > 0){
+            parsedResults.push(arrObj);
+          }
         }
       }
-    }
+      const avg = total/parsedResults.length;
+      let colorVals = null;
+      if(avg > min && avg < max){
+        colorVals = [min, avg, max];
+      }
 
-    const avg = total/parsedResults.length;
 
-    let colorVals = null;
-    if(avg > min && avg < max){
-      colorVals = [min, avg, max];
-    }
+      var data = google.visualization.arrayToDataTable(parsedResults);
 
-    var data = google.visualization.arrayToDataTable(parsedResults);
+      var options = {
+        region: 'US',
+        colorAxis: {
+          colors: [ '#ffffbc', "#FFA500", "#e60000"],
+          values: colorVals
+        },
+        resolution: "provinces"
+      };
 
-    var options = {
-      region: 'US',
-      colorAxis: {
-        colors: [ '#ffffbc', "#FFA500", "#e60000"],
-        values: colorVals
-      },
-      resolution: "provinces"
-    };
+      var chart = new google.visualization.GeoChart(document.getElementById('geoChart'));
 
-    var chart = new google.visualization.GeoChart(document.getElementById('geoChart'));
-    google.visualization.events.addListener(chart, 'ready', function(){
-      $('#loadingLayer').hide();
+      chart.draw(data, options);
     });
+  };
 
-    chart.draw(data, options);
-  });
+  return drawRegionsMap;
 }
