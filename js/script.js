@@ -58,16 +58,7 @@ function intializeGeoChart(){
 
 function mapForYear(year){
   var drawRegionsMap = function() {
-    var prod = false,
-        host = 'localhost:5000';
-    if(prod){
-      host='71.232.15.121';
-    }
-
-    var url = `http://${host}/showStateCount`;
-    if( $('#cumulativeCheckbox').prop('checked')){
-      url = `http://${host}/showStateCountCum`;
-    }
+    var url = `/phish-api/showStateCount`;
 
     url = url + '/' + year;
 
