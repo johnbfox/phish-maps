@@ -19,7 +19,7 @@ function init(){
     $('#geoChart').css('z-index', 2);
     $('#playContainer').html(chartDiv);
     $('#geoChart').show();
-    drawRegionsMap();
+    resetMap();
   });
 
   $('#slider').on('change', function(){
@@ -32,6 +32,7 @@ function init(){
   });
 
   $('#cumulativeCheckbox').change(function(){
+
     resetMap();
   });
 
@@ -41,7 +42,7 @@ function init(){
   });
 
   $(window).resize(function(){
-    drawRegionsMap();
+    resetMap();
   });
 }
 
@@ -58,7 +59,11 @@ function intializeGeoChart(){
 
 function mapForYear(year){
   var drawRegionsMap = function() {
-    var url = `/phish-api/showStateCount`;
+    var url= '/phish-api/showStateCountCum'
+
+    if(regionsMode === '0'){
+      url = '/phish-api/showStateCount';
+    }
 
     url = url + '/' + year;
 
@@ -121,4 +126,12 @@ function mapForYear(year){
   };
 
   return drawRegionsMap;
+}
+
+function toggleRegions(){
+  if(regionsMode === '0'){
+    regionsMode = '1';
+  }else{
+    regionsMode = '0';
+  }
 }
