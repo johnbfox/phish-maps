@@ -10,7 +10,7 @@ function init(){
   intializeGeoChart();
   $('#playButton').click(function(){
     $('#geoChart').hide();
-    $('#geoChart').addClass('pull-up');
+    $('#geoChart').css('margin-top', -12);
     $('#geoChartOverlay').hide();
     $('#geoSection').hide();
     $('#heroSection').hide();
