@@ -1,4 +1,4 @@
-var regionsMode = '0',
+var cumulativeEnabled = true,
     regionsYear = '2016',
     chartDiv = '<div id="geoChart"></div>';
 
@@ -32,7 +32,7 @@ function init(){
   });
 
   $('#cumulativeCheckbox').change(function(){
-
+    cumulativeEnabled = !cumulativeEnabled;
     resetMap();
   });
 
@@ -61,7 +61,7 @@ function mapForYear(year){
   var drawRegionsMap = function() {
     var url= '/phish-api/showStateCountCum'
 
-    if(regionsMode === '0'){
+    if(!cumulativeEnabled){
       url = '/phish-api/showStateCount';
     }
 
@@ -126,12 +126,4 @@ function mapForYear(year){
   };
 
   return drawRegionsMap;
-}
-
-function toggleRegions(){
-  if(regionsMode === '0'){
-    regionsMode = '1';
-  }else{
-    regionsMode = '0';
-  }
 }
