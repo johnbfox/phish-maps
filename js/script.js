@@ -59,10 +59,10 @@ function intializeGeoChart(){
 
 function mapForYear(year){
   var drawRegionsMap = function() {
-    var url= 'http://johnbfox.com:5000/phish-api/showStateCountCum'
+    var url= '/phish-api/showStateCountCum'
 
     if(regionsMode === '0'){
-      url = 'http://johnbfox.com:5000/phish-api/showStateCount';
+      url = '/phish-api/showStateCount';
     }
 
     url = url + '/' + year;
